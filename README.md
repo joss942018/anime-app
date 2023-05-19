@@ -3,15 +3,6 @@
 ### Backend (NestJS)
 Start a new NestJS project by running nest new backend in your command line. This will create a new directory called backend with a new NestJS project.
 
-Inside the backend directory, the relevant files and folders are:
-
-src/app.module.ts: This is where you define your NestJS modules.
-src/anime/anime.module.ts: The module for handling anime-related requests.
-src/anime/anime.service.ts: The service for fetching data from the AniList API.
-src/anime/anime.controller.ts: The controller for handling incoming HTTP requests.
-The structure will look like this:
-
-
 
 |-- /node_modules <br/>
 |-- /src <br/>
