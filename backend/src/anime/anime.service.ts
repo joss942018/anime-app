@@ -17,7 +17,7 @@ export class AnimeService {
   private readonly graphQLClient: GraphQLClient;
 
   constructor() {
-    this.graphQLClient = new GraphQLClient('https://anilist.co/graphiql');
+    this.graphQLClient = new GraphQLClient('https://graphql.anilist.co');
   }
 
   async searchAnime(query: string) {
