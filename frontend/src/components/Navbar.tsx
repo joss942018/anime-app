@@ -1,7 +1,8 @@
-import React from 'react';
-import Link from 'next/link';
-import styles from '../styles/Navbar.module.css';
+import React from "react";
+import Link from "next/link";
+import styles from "../styles/Navbar.module.css";
 
+// Note: This component is good ✅
 const Navbar: React.FC = () => {
   return (
     <nav className={styles.navbar}>

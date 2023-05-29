@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import AnimeCard from '../components/AnimeCard';
-import Layout from '../components/Layout';
+import React, { useState, useEffect } from "react";
+import AnimeCard from "../components/AnimeCard";
+import Layout from "../components/Layout";
 
 type Anime = {
   id: number;
@@ -13,13 +13,15 @@ type AnimeCardProps = {
   anime: Anime;
   onToggleFavorite: (anime: Anime) => void;
   isFavorite: boolean;
-};
+}; // Note: Unused type definition ❌
 
 const FavoritesPage: React.FC = () => {
+  // Note: This component has 4 renders when it is not even receiving props or state updates ❌
+  // It should be good to use React.memo/useMemo/useCallback to avoid unnecessary renders
   const [favorites, setFavorites] = useState<Anime[]>([]);
 
   useEffect(() => {
-    const favoritesData = localStorage.getItem('favorites');
+    const favoritesData = localStorage.getItem("favorites"); // Note: This is a good way to persist data, but it's not a good idea to use localStorage directly in the component ❌
     if (favoritesData) {
       const parsedFavorites: Anime[] = JSON.parse(favoritesData);
       setFavorites(parsedFavorites);
@@ -29,7 +31,9 @@ const FavoritesPage: React.FC = () => {
   const handleToggleFavorite = (anime: Anime) => {
     if (isFavorite(anime.id)) {
       // Remove anime from favorites
-      const updatedFavorites = favorites.filter((favAnime) => favAnime.id !== anime.id);
+      const updatedFavorites = favorites.filter(
+        (favAnime) => favAnime.id !== anime.id
+      );
       setFavorites(updatedFavorites);
     } else {
       // Add anime to favorites
@@ -39,7 +43,8 @@ const FavoritesPage: React.FC = () => {
   };
 
   const isFavorite = (animeId: number) => {
-    return favorites.some((favAnime) => favAnime.id === animeId);
+    // Note: isFavorite is a good name for this function but it's located in the wrong place ❌ (should be declared outside of the component or above)
+    return favorites.some((favAnime) => favAnime.id === animeId); // Note: some is a good alternative to find ✅
   };
 
   return (

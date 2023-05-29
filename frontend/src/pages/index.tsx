@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import SearchBar from '../components/SearchBar';
-import AnimeCard from '../components/AnimeCard';
-import Layout from '../components/Layout';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import SearchBar from "../components/SearchBar";
+import AnimeCard from "../components/AnimeCard";
+import Layout from "../components/Layout";
 
 type Anime = {
+  // Note: This type definition is used in multiple components, so it's better to declare it in a separate file and import it where it's needed ❌
   id: number;
   title: { english: string };
   coverImage: { large: string };
@@ -12,6 +13,7 @@ type Anime = {
 };
 
 type AnimeCardProps = {
+  // Note: Unused type definition ❌
   anime: Anime;
   onToggleFavorite: (anime: Anime) => void;
   isFavorite: boolean;
@@ -23,7 +25,7 @@ const IndexPage: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const favoritesData = localStorage.getItem('favorites');
+    const favoritesData = localStorage.getItem("favorites");
     if (favoritesData) {
       const parsedFavorites: Anime[] = JSON.parse(favoritesData);
       setFavorites(parsedFavorites);
@@ -31,18 +33,24 @@ const IndexPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+    localStorage.setItem("favorites", JSON.stringify(favorites)); // Note: it would've been good to handle it as a custom hook ❌
   }, [favorites]);
 
   const handleSearch = async (query: string) => {
-    const response = await fetch(`http://localhost:3001/anime/search?query=${query}`);
+    const response = await fetch(
+      `http://localhost:3001/anime/search?query=${query}`
+    ); // Note: It's better to use environment variables instead of hardcoding the URL ❌
     const results: Anime[] = await response.json();
     setAnimes(results);
   };
 
   const handleToggleFavorite = (anime: Anime) => {
+    // Note: This function is doing too much, it could re-use some logic/functions that already exist in other components ❌
     if (favorites.some((favAnime) => favAnime.id === anime.id)) {
-      const updatedFavorites = favorites.filter((favAnime) => favAnime.id !== anime.id);
+      // Note: this same logic is used in isFavorite function, so it's better to use it instead of repeating the code ❌
+      const updatedFavorites = favorites.filter(
+        (favAnime) => favAnime.id !== anime.id
+      );
       setFavorites(updatedFavorites);
     } else {
       const updatedFavorites = [...favorites, anime];
@@ -51,7 +59,7 @@ const IndexPage: React.FC = () => {
   };
 
   const handleViewFavorites = () => {
-    router.push('/favorites');
+    router.push("/favorites");
   };
 
   const isFavorite = (animeId: number) => {
@@ -69,7 +77,7 @@ const IndexPage: React.FC = () => {
           isFavorite={isFavorite(anime.id)}
         />
       ))}
-      <button  onClick={handleViewFavorites}>View Favorites</button>
+      <button onClick={handleViewFavorites}>View Favorites</button>
     </Layout>
   );
 };
